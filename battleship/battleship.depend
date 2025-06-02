@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1748767795 source:c:\users\pc\desktop\programmingproject\battleship\board.cpp
+	"Board.h"
+	<iostream>
+	<fstream>
+	<cctype>
+
+1748768348 c:\users\pc\desktop\programmingproject\battleship\board.h
+	"Ship.h"
+	<string>
+	<vector>
+
+1748768170 c:\users\pc\desktop\programmingproject\battleship\ship.h
+	<vector>
+	<string>
+
+1748768036 source:c:\users\pc\desktop\programmingproject\battleship\main.cpp
+	"Board.h"
+	<cstdlib>
+	<ctime>
+	<iostream>
+
+1748767846 source:c:\users\pc\desktop\programmingproject\battleship\ship.cpp
+	"Ship.h"
+
