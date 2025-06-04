@@ -68,24 +68,30 @@ void Board::print() {
     }
 }
 
-// Applies an attack to the board at the given coordinate
-// Marks hits with 'X', misses with 'O', already attacked spots stay unchanged
 bool Board::applyAttack(string coord) {
+    // Check if the coordinate is valid (e.g. A0 to J9)
+    if (coord.length() != 2 || coord[0] < 'A' || coord[0] > 'J' || coord[1] < '0' || coord[1] > '9') {
+        cout << "\033[33mInvalid coordinate. Please choose a row between 'A' and 'J' and a column between '0' and '9'\033[0m" << endl;
+        return false;
+    }
+
     int row, column;
     ParseCoordinates(coord, row, column);
+
     if (at(row, column) == 'S') {
         at(row, column) = 'X';
-        cout << "Hit!" << endl;
+        cout << "\033[32mHit!\033[0m" << endl;
         return true;
     } else if (at(row, column) == '.') {
         at(row, column) = 'O';
-        cout << "Miss!" << endl;
+        cout << "\033[31mMiss!\033[0m" << endl;
         return false;
     } else {
-        cout << "Already attacked." << endl;
+        cout << "\033[33mAlready attacked.\033[0m" << endl;
         return false;
     }
 }
+
 
 // Counts how many ship cells ('S') are still on the board
 int Board::countShips() {

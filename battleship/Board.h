@@ -19,13 +19,13 @@ private:
     char grid[BoardSize][BoardSize]; // The game grid
 public:
     Board();
-    void loadFromFile(string filename);    // Load board from file
-    void saveToFile(string filename);      // Save board to file
-    char& at(int row, int column);         // Access cell value
-    void print();                          // Print board to console
-    bool applyAttack(string coord);        // Apply an attack at given coordinate
-    int countShips();                      // Count remaining ship parts
-    vector<Ship> ships;                    // List of ships (not used in logic)
+    void loadFromFile(string filename);                              // Load board from file
+    void saveToFile(string filename);                                // Save board to file
+    char& at(int row, int column);                                   // Access cell value
+    void print();                                                    // Print board to console
+    bool applyAttack(string coord);                                  // Apply an attack at given coordinate
+    int countShips();                                                // Count remaining ship parts
+    vector<Ship> ships;                                              // List of ships (not used in logic)
 };
 
 #endif
