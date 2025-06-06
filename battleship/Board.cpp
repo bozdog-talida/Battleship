@@ -52,7 +52,7 @@ char& Board::at(int row, int column) {
 }
 
 // Prints the current state of the board
-void Board::print() {
+void Board::print() const {
     cout << "  ";
     for (int column = 0; column < BoardSize; column++) {
         cout << column << " ";
@@ -62,14 +62,24 @@ void Board::print() {
     for (int row = 0; row < BoardSize; row++) {
         cout << char('A' + row) << " ";
         for (int column = 0; column < BoardSize; column++) {
-            cout << grid[row][column] << " ";
+            char cell = grid[row][column];
+            if (cell == 'X')
+                cout << "\033[32m" << "X" << "\033[0m ";
+            else if (cell == 'O')
+                cout << "\033[31m" << "O" << "\033[0m ";
+            else if (cell == 'S')
+                cout << "\033[36m" << "S" << "\033[0m ";
+            else
+                cout << cell << " ";
         }
         cout << endl;
     }
 }
 
+
 bool Board::applyAttack(string coord) {
     // Check if the coordinate is valid (e.g. A0 to J9)
+    coord[0] = toupper(coord[0]);
     if (coord.length() != 2 || coord[0] < 'A' || coord[0] > 'J' || coord[1] < '0' || coord[1] > '9') {
         cout << "\033[33mInvalid coordinate. Please choose a row between 'A' and 'J' and a column between '0' and '9'\033[0m" << endl;
         return false;
@@ -78,12 +88,13 @@ bool Board::applyAttack(string coord) {
     int row, column;
     ParseCoordinates(coord, row, column);
 
-    if (at(row, column) == 'S') {
-        at(row, column) = 'X';
+    char& cell = at(row, column);
+    if (cell == 'S') {
+        cell = 'X';
         cout << "\033[32mHit!\033[0m" << endl;
         return true;
-    } else if (at(row, column) == '.') {
-        at(row, column) = 'O';
+    } else if (cell == '.') {
+        cell = 'O';
         cout << "\033[31mMiss!\033[0m" << endl;
         return false;
     } else {

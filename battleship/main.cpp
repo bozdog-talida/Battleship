@@ -18,6 +18,29 @@ void appendAttackToFile(const string& filename, const string& coord) {
     file << coord << "\n";
 }
 
+//Print attack history board
+void printAttackHistory(char grid[BoardSize][BoardSize]) {
+    cout << "  ";
+    for (int column = 0; column < BoardSize; column++) {
+        cout << column << " ";
+    }
+    cout << endl;
+
+    for (int row = 0; row < BoardSize; row++) {
+        cout << char('A' + row) << " ";
+        for (int column = 0; column < BoardSize; column++) {
+            char cell = grid[row][column];
+            if (cell == 'X')
+                cout << "\033[32m" << cell << "\033[0m ";
+            else if (cell == 'O')
+                cout << "\033[31m" << cell << "\033[0m ";
+            else
+                cout << cell << " ";
+        }
+        cout << endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
     // Expect exactly 3 arguments: attack coordinate, board1 file, board2 file
     if (argc != 4) {
@@ -82,7 +105,7 @@ int main(int argc, char* argv[]) {
     Board1.print();
     cout << "\033[36mYou have " << Board1.countShips() << " ship parts left.\033[0m\n" << endl;
 
-    // Print attack history board
+    // Build attack history board
     char attackGrid[BoardSize][BoardSize];
     for (int i = 0; i < BoardSize; ++i)
         for (int j = 0; j < BoardSize; ++j)
@@ -101,19 +124,11 @@ int main(int argc, char* argv[]) {
     }
     history.close();
 
+    // Print attack history board
     cout << "\n\033[36mYour previous attacks (only X for hits, O for misses):\033[0m\n" << endl;
-    cout << "  ";
-    for (int col = 0; col < BoardSize; ++col)
-        cout << col << " ";
-    cout << endl;
+    printAttackHistory(attackGrid);
 
-    for (int row = 0; row < BoardSize; ++row) {
-        cout << char('A' + row) << " ";
-        for (int col = 0; col < BoardSize; ++col) {
-            cout << attackGrid[row][col] << " ";
-        }
-        cout << endl;
-    }
+    cout << "\033[36mComputer has " << Board2.countShips() << " ship parts left.\033[0m\n" << endl;
 
     // Check if computer won
     if (Board1.countShips() == 0) {
